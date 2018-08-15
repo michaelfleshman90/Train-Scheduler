@@ -15,7 +15,16 @@ var database = firebase.database();
  var destination = "";
  var firsttraintime = 0;
  var frequency = 0;
- 
+
+var trainRef = firebase.database().ref(trainname);
+  trainRef.set ({
+    trainname: {
+      destination: destination,
+      firsttraintime: firsttraintime,
+      frequency: frequency
+    }
+  });
+  
 database.ref().on("value", addTrain);
  // Capture Button Click
  $("button").on("click", function(event) {
@@ -47,3 +56,5 @@ database.ref().on("value", addTrain);
    event.firsttraintime.val();
    event.frequency.val();
  }
+ //read on moment.js on parseing time
+ //
