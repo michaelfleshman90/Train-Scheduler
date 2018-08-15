@@ -20,7 +20,7 @@ var database = firebase.database();
 
 database.ref().on("value", addTrain);
  // Capture Button Click
- $("button").on("click", function() {
+ $("button").on("click", function(event) {
   try {
   
    // Grabbed values from text boxes
@@ -64,5 +64,6 @@ database.ref().on("value", addTrain);
   var trainArrival = moment().add(minsTilTrain, "minutes");
     console.log(moment(trainArrival).format("H HH")); 
  }
- //read on moment.js on parseing time
- //
+ //I still need to print the information from the database to the html page.
+ //I still need to make tables for the information printed on the html page.
+ //I need to fix the error on the addTrain event.
