@@ -15,20 +15,12 @@ var database = firebase.database();
  var destination = "";
  var firsttraintime = 0;
  var frequency = 0;
+ 
 
-var trainRef = firebase.database().ref(trainname);
-  trainRef.set ({
-    trainname: {
-      destination: destination,
-      firsttraintime: firsttraintime,
-      frequency: frequency
-    }
-  });
-  
+
 database.ref().on("value", addTrain);
  // Capture Button Click
- $("button").on("click", function(event) {
-   //event.preventDefault();
+ $("button").on("click", function() {
   try {
   
    // Grabbed values from text boxes
@@ -44,17 +36,33 @@ database.ref().on("value", addTrain);
      Frequency: frequency,
      dateAdded: firebase.database.ServerValue.TIMESTAMP
    });
+
+  var trainRef = firebase.database().ref(trainname);
+  trainRef.set ({
+    trainname: {
+      destination: destination,
+      firsttraintime: firsttraintime,
+      frequency: frequency
+    }
+  });
   
   } catch (error) {
     console.error(error);
   }
  });
  function addTrain(event) {
-  var firstTrainTimeConvert = moment(event.firsttraintime.val(), "HH:mm").subtract(1, "years");
-    console.log(firstTrainTimeConvert);
-   event.destination.val();
-   event.firsttraintime.val();
-   event.frequency.val();
+  var trainTimeConvert = moment(event.firsttraintime.val(), "H HH").subtract(1, "years");
+    console.log(trainTimeConvert);
+  var tFrequency = event.frequency.val();
+    console.log(tFrequency);
+  var timeDifference = moment().diff(moment(trainTimeConvert), "minutes");
+    console.log(timeDifference);
+  var tRemain = timeDifference % tFrequency;
+    console.log(tRemain);
+  var minsTilTrain = tFrequency - tRemain;
+    console.log(minsTilTrain);
+  var trainArrival = moment().add(minsTilTrain, "minutes");
+    console.log(moment(trainArrival).format("H HH")); 
  }
  //read on moment.js on parseing time
  //
